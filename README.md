@@ -5,7 +5,7 @@
  O código apresentado utiliza o arquivo csv disponibilizado pelo Banco Central. O arquivo csv que é usado pode ser acessado pelo link https://www.bcb.gov.br/estabilidadefinanceira/cotacoestodas.
  Através desse arquivo, conseguimos pegar os valores de dólar de cada moeda.
 
-#Bibliotecas necessárias:
+# Bibliotecas necessárias:
  - requests
  - pandas
  
