@@ -5,6 +5,9 @@
  O código apresentado utiliza a API disponibilizada pelo Banco Central. As requisições de API usadas podem ser verificadas em https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/aplicacao#!/recursos.
  Dentro das opções de API, primeiro recuperamos todas as possíveis moedas e então verificamos a cotação de cada uma para poder encontrar o menor valor.
 
+#Bibliotecas necessárias:
+ - requests
+ - pandas
  
 # Problema apresentado:
 
