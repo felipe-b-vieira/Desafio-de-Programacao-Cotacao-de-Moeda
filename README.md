@@ -2,8 +2,8 @@
  Desafio de Programação apresentado em processo seletivo com objetivo de obter a moeda com menor cotação de dólar.
  
 # Solução do Problema
- O código apresentado utiliza a API disponibilizada pelo Banco Central. As requisições de API usadas podem ser verificadas em https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/aplicacao#!/recursos.
- Dentro das opções de API, primeiro recuperamos todas as possíveis moedas e então verificamos a cotação de cada uma para poder encontrar o menor valor.
+ O código apresentado utiliza o arquivo csv disponibilizado pelo Banco Central. O arquivo csv que é usado pode ser acessado pelo link https://www.bcb.gov.br/estabilidadefinanceira/cotacoestodas.
+ Através desse arquivo, conseguimos pegar os valores de dólar de cada moeda.
 
 #Bibliotecas necessárias:
  - requests
