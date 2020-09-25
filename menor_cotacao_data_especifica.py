@@ -7,12 +7,17 @@ MONTANTE = 1
 
 
 #Chama a api para pegar a listagem de todas as moedas com suas cotacoes
-def gera_dataframe_moedas_cotacao(dia,mes,ano):
+def gera_dataframe_moedas_cotacao(data):
 	#faz requisição para a API do Banco Central através de um endereço que retorna um arquivo com todas as cotações(Sem BRL e USD)
     #Usando valor de endereço de teste e pegando seu csv e adicionando em um dataframe de pandas
     #O Csv não tem header, preciso adicionar manualmente(Iguais ao site)
-    df_csv_moedas=pd.read_csv("https://www4.bcb.gov.br/Download/fechamento/20200924.csv",sep=';',header=None,names=["#","Cod Moeda","Tipo","Moeda","Taxa Compra","Taxa Venda","Paridade Compra","Paridade Venda"])
-    return df_csv_moedas
+    try:
+        df_csv_moedas=pd.read_csv("https://www4.bcb.gov.br/Download/fechamento/"+data+".csv",sep=';',header=None,names=["#","Cod Moeda","Tipo","Moeda","Taxa Compra","Taxa Venda","Paridade Compra","Paridade Venda"])
+        return df_csv_moedas
+    except:
+        return False
+    
+
 
 
 def calcular_dolar_df(df_moedas,MONTANTE):
@@ -34,6 +39,7 @@ def calcular_dolar_df(df_moedas,MONTANTE):
     
     df_moedas["Valor_dolar"] = valores_dolar
     return df_moedas
+    
     
     
 #Para mantar o trabalho todo em português, foi necessário realizar web scrapping para pegar os nomes dos países brasileiros com base no seu código
@@ -65,30 +71,6 @@ def gera_listagem_nomes_pais():
     
     return dict_paises    
     
-    
-    '''
-    #====Código utilizado para Web Scrapping em outra página========
-    #Pegamos os nomes e códigos separadamente, mas ambos possuem a mesma quantidade no site
-    #pega todos os links na tabela de paises, seus títulos são os nomes dos países
-    nomes_paises=[]
-    for nomes_paises_ahref in tabela_paises.findChildren(['a']):
-        nomes_paises.append(nomes_paises_ahref.get('title'))
-    
-    #pega todas linhas da tabela, elas contêm o código
-    codigos_paises=[]
-    linhas_paises = tabela_paises.findChildren(['tr'])
-    for codigo_pais_atual in codigos_e_paises:
-        #pega as células da linha, o primeiro valor é a célula com o código
-        celulas_paises = codigo_pais_atual.findChildren('td')
-        codigo_pais=val_codigo_pais[0].string
-        #salva no vetor de código
-        if(codigo_pais!=None):
-            codigos_paises.append(codigo_pais)
-            
-    #retorna um dicionario com os códigos como chave e nomes dos países como valores
-    return dict(zip(codigos_paises, nomes_paises))
-    '''
-
 
 
 def acha_infos_menor_dolar(df_moedas):    
@@ -106,6 +88,7 @@ def acha_infos_menor_dolar(df_moedas):
     return simbolo_moeda, paises_moeda,cotacao_moeda
     
     
+    
 def retorna_resultado_menor_cotacao(simbolo_moeda,paises_moeda,cotacao_moeda):
     #printa as saidas
     print(simbolo_moeda, end = ',')
@@ -115,8 +98,26 @@ def retorna_resultado_menor_cotacao(simbolo_moeda,paises_moeda,cotacao_moeda):
     print(cotacao_moeda)
 
 
+
+#lê a data no formato YYYYMMDD e retorna formatado para leitura de arquivo
+def leitura_data():
+    data_nao_formatada = input("Entre com a data no formato YYYYMMDD:\n")
+    data_formatada = data_nao_formatada.strip("/")
+    data_formatada = data_formatada.strip(" ")
+    return data_formatada
+
+
+
+#Main do código, pega as informações de cotação de todas as moedas, calcula o valor em dólar de cada uma e pega as informações da com menor valor
 if __name__ == "__main__":
-    df_moedas_cotacao = gera_dataframe_moedas_cotacao(1,1,1)
-    df_moedas_cotacao = calcular_dolar_df(df_moedas_cotacao,MONTANTE)
-    simbolo, paises, cotacao = acha_infos_menor_dolar(df_moedas_cotacao)
-    retorna_resultado_menor_cotacao(simbolo,paises,cotacao)
+    #leitura da data e formatacao para padrao da funcao
+    data_moeda = leitura_data()
+    df_moedas_cotacao = gera_dataframe_moedas_cotacao(data_moeda)
+    #se o df_moedas_cotacao for -1, significa que não achou o csv então imprime x na tela
+    if(type(df_moedas_cotacao)==bool):
+        print('x')
+    else:
+        df_moedas_cotacao = calcular_dolar_df(df_moedas_cotacao,MONTANTE)
+        simbolo, paises, cotacao = acha_infos_menor_dolar(df_moedas_cotacao)
+        retorna_resultado_menor_cotacao(simbolo,paises,cotacao)
+    
