@@ -1,4 +1,4 @@
-# Desafio de Programacao-Cotacao de Moeda
+# Desafio de Programação - Cotação de Moedas
  Desafio de Programação apresentado em processo seletivo com objetivo de obter a moeda com menor cotação de dólar.
  
 # Solução do Problema
