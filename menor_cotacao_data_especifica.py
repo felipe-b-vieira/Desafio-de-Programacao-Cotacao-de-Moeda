@@ -113,15 +113,16 @@ def leitura_data():
 def main_menor_cotacao():
     # Leitura da data e formatação para padrão da função
     data_moeda = leitura_data()
-    # Tenta pegar o arquivo de cotação das moedas, se não conseguir, levanta exceção
+    # Tenta pegar o arquivo de cotação das moedas e achar informações do menor dólar, se não conseguir, levanta exceção
     try:
         df_moedas_cotacao = gera_dataframe_moedas_cotacao(data_moeda)
+        df_moedas_cotacao = calcular_dolar_df(df_moedas_cotacao)
+        # Pode apresentar exceção por causa do Web Scrapping
+        simbolo, paises, cotacao = acha_infos_menor_dolar(df_moedas_cotacao)
     except Exception as e:
         print('x')
         return
-    # Restante da função, calcula o valor em dólar das moedas e encontra o valor da moeda com menor valor
-    df_moedas_cotacao = calcular_dolar_df(df_moedas_cotacao)
-    simbolo, paises, cotacao = acha_infos_menor_dolar(df_moedas_cotacao)
+    # Mostra na tela, de maneira formatada, o resultado do programa
     retorna_resultado_menor_cotacao(simbolo, paises, cotacao)
 
 
