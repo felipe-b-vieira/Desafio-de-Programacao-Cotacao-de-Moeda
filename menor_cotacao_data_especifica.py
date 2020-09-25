@@ -1,9 +1,11 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+from decimal import Decimal
 
 #CONSTANTES
 MONTANTE = 1
+NOTACAO_CIENTIFICA = False
 
 
 #Chama a api para pegar a listagem de todas as moedas com suas cotacoes
@@ -89,13 +91,17 @@ def acha_infos_menor_dolar(df_moedas):
     
     
     
-def retorna_resultado_menor_cotacao(simbolo_moeda,paises_moeda,cotacao_moeda):
+def retorna_resultado_menor_cotacao(simbolo_moeda,paises_moeda,cotacao_moeda,notacao_cientifca):
     #printa as saidas
     print(simbolo_moeda, end = ',')
     #printa os paises fora do array
     for pais in paises_moeda:
         print(pais, end = ',')
-    print(cotacao_moeda)
+    #usado para printar sem notacao cientifica
+    if(notacao_cientifca):
+        print(Decimal.from_float(cotacao_moeda))
+    else:
+        print(cotacao_moeda)
 
 
 
@@ -119,5 +125,5 @@ if __name__ == "__main__":
     else:
         df_moedas_cotacao = calcular_dolar_df(df_moedas_cotacao,MONTANTE)
         simbolo, paises, cotacao = acha_infos_menor_dolar(df_moedas_cotacao)
-        retorna_resultado_menor_cotacao(simbolo,paises,cotacao)
+        retorna_resultado_menor_cotacao(simbolo,paises,cotacao,NOTACAO_CIENTIFICA)
     
