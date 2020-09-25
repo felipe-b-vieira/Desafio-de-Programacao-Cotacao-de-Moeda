@@ -6,9 +6,12 @@
  Através desse arquivo, conseguimos gerar os valores de dólar de cada moeda.
  
  Para execução do código, basta executar o arquivo menor_cotacao_data_especifica.py com python3. Insira a data e um csv será pego, se possível, do site. Um dataframe vai ser gerado com as informações da moeda para o cálculo do dolar. E, para cada tipo de moeda, seu valor frente ao dólar é calculado e salvo nesse dataframe.
+ 
  Tendo os valores do dólar, é escolhido o com menor valor e comparado com a listagem de nome de países e suas moedas para retornar todos os países que usam a moeda. Um pouco fora da proposta, mas existem moedas que tem origem em múltiplos países.
- Para descobrir o nome do país, é feito um web scrapping na página de link https://pt.wikipedia.org/wiki/ISO_4217 da Wikipedia, retornando o código da Moeda e seu nome. Através dessa ligação é possível gerar os nomes dos países que usam cada moeda.
- Caso o dataframe não contenha o csv, ele retorna um boolean que indica que precisa mostrar o valor 'x' na tela e cancelar a execução do resto do código.
+ 
+ Para descobrir o nome do país, é feito um web scrapping na página de link https://pt.wikipedia.org/wiki/ISO_4217 da Wikipedia, retornando o código da Moeda e seu nome. Através dessa ligação é possível gerar os nomes dos países que usam cada moeda. Web Scrapping não é o ideal, mas das alternativas apresentadas para nome em português, adquirir pela página da Wikipédia foi a melhor encontrada.
+ 
+ No main apresentado, ele faz controle de erro para a leitura do csv. No caso de apresentar erro, ele retorna da função e printa o valor 'x' como apresentado no problema.
 
 # Bibliotecas necessárias:
  - requests
